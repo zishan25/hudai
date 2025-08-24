@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shahed ❤️ Jui</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #ffe4e1, #fff0f5);
+      text-align: center;
+      padding: 40px;
+      overflow: hidden;
+    }
+
+    #question {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #e75480;
+      min-height: 60px;
+    }
+
+    .kitten {
+      width: 250px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .yes {
+      background-color: #ff69b4;
+      color: white;
+    }
+
+    .no {
+      background-color: #d3d3d3;
+      color: black;
+      position: absolute;
+    }
+
+    #result {
+      display: none;
+      margin-top: 30px;
+      font-size: 24px;
+      color: #ff1493;
+    }
+
+    .hearts {
+      font-size: 36px;
+      animation: float 2s infinite;
+    }
+
+    #countup {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #8b0000;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <audio autoplay loop>
+    <source src="YOUR_AUDIO_LINK_HERE.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div id="main">
+    <img src="c:\Users\MD Ahasanul Hoque\Downloads\6d131c6a-c8b8-4e24-b016-10cca4ebce33.gif" class="kitten" alt="cute kitten" />
+    <div id="question">Do you love me, Jui? 💖</div>
+    <button class="btn yes" onclick="yesClicked()">Yes 😚</button>
+    <button class="btn no" id="noBtn" onclick="noClicked()">No 😝</button>
+  </div>
+
+  <div id="result">
+    <img src="c:\Users\MD Ahasanul Hoque\Downloads\19588b98-c88c-44ff-be46-4e1e0144bab2.gif" class="kitten" />
+    <div class="hearts">💞 Shahed & Jui 💘</div>
+    <p>Shahed & Jui — meant to be since forever 💍</p>
+    <p>You said yes, Jui! You're officially stuck with this lovable idiot 😚</p>
+    <div id="countup">Loading timer…</div>
+    <canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const questionEl = document.getElementById("question");
+    const questions = [
+      "Please love me, Jui 😢",
+      "I know you have feelings for me 💘",
+      "You don't have any other option 😜",
+      "Say yes na beauty 💞",
+      "Thirudiii, don’t lie! You love me 😍",
+      "Even kittens know you love me 😽"
+    ];
+    let questionIndex = 0;
+
+    function noClicked() {
+      const x = Math.random() * (window.innerWidth - 150);
+      const y = Math.random() * (window.innerHeight - 150);
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+      questionIndex = (questionIndex + 1) % questions.length;
+      questionEl.innerText = questions[questionIndex];
+    }
+
+    function yesClicked() {
+      document.getElementById("main").style.display = "none";
+      document.getElementById("result").style.display = "block";
+      startCountup(new Date("2024-12-31T00:00:00")); // 🎯 Your love date
+      launchConfetti();
+    }
+
+    function startCountup(startDate) {
+      setInterval(() => {
+        const now = new Date();
+        const diff = now - startDate;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+        document.getElementById("countup").innerText =
+          `Loving you since: ${days}d ${hours}h ${mins}m ${secs}s 💗`;
+      }, 1000);
+    }
+
+    function launchConfetti() {
+      const canvas = document.getElementById("confettiCanvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const hearts = Array.from({
+        length: 75
+      }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        speed: Math.random() * 3 + 1,
+        size: Math.random() * 20 + 10,
+        opacity: Math.random()
+      }));
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        hearts.forEach(h => {
+          ctx.globalAlpha = h.opacity;
+          ctx.font = `${h.size}px serif`;
+          ctx.fillText("❤️ Shahed & Jui 💙", h.x, h.y);
+          h.y += h.speed;
+          if (h.y > canvas.height) {
+            h.y = -20;
+            h.x = Math.random() * canvas.width;
+          }
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+  </script>
+</body>
+
+</html>
